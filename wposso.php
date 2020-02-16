@@ -1,9 +1,11 @@
 <?php
 /**
  * Plugin Name: Single Sign On Client (Envato)
+ * Plugin URI: http://wp-oauth.com
  * Version: 1.1.0
  * Description: Provides Single Sign On integration with Envato.
- * Author: Sherdle, Justin Greer Interactive, LLC
+ * Author: Justin Greer Interactive, LLC
+ * Author URI: http://wp-oauth.com
  * License: GPL2
  *
  * This program is GLP but; you can redistribute it and/or modify
