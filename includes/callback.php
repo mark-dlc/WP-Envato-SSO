@@ -212,6 +212,7 @@ if ( isset( $_GET['code_background'] ) && ! empty( $_GET['code_background'] ) ) 
         }
 
     } else if (email_exists( $user_email->email ) == false ) {
+        // If the user exists, but the email does not. The user changed his email at Envato? TODO: Support this
         exit( 'User with email already exists.');
     } else {
 
