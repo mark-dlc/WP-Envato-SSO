@@ -171,6 +171,8 @@ if ( isset( $_GET['code_background'] ) && ! empty( $_GET['code_background'] ) ) 
     $user_email = json_decode( $response['body'] );
 
     $user_id   = username_exists( $envato_user_id );
+
+    //User does not exist
     if ( ! $user_id && email_exists( $user_email->email ) == false ) {
         
         /*
@@ -211,10 +213,8 @@ if ( isset( $_GET['code_background'] ) && ! empty( $_GET['code_background'] ) ) 
             exit;
         }
 
-    } else if (email_exists( $user_email->email ) == false ) {
-        // If the user exists, but the email does not. The user changed his email at Envato? TODO: Support this
-        exit( 'User with email already exists.');
-    } else {
+    //User exists
+    } else if ($user_id) {
 
         // Already Registered... Log the User In
         $random_password = __( 'User already exists.  Password inherited.' );
@@ -225,8 +225,18 @@ if ( isset( $_GET['code_background'] ) && ! empty( $_GET['code_background'] ) ) 
         //    wp_die( 'For security reasons, this user can not use Single Sign On' );
         //}
 
+        //If the user has purchases, update his purchases
         if ($purchases) {
             update_user_meta($user_id, 'user_purchases', $purchases);
+        }
+
+        //If the user email is not yet in the database the user changed his email, update this.
+        if (email_exists( $user_email->email ) == false ) {
+            $args = array(
+                'ID'         => $user->id,
+                'user_email' => $user_email->email
+            );
+            wp_update_user( $args );
         }
 
         wp_clear_auth_cookie();
